@@ -1,0 +1,5 @@
+- if signed_in?
+  = form_for @tweet do |f|
+    = f.hidden_field :user_id, :value => current_user.id
+    = f.text_area :message, :rows => 5
+    = f.submit "Tweet!"

@@ -1,0 +1,33 @@
+%h1 KCTweet
+
+%div
+  - if signed_in?
+    Sign in as
+    = current_user.name
+    = link_to "Sign out", signout_path
+  - else
+    = link_to "Sign in with Twitter", "/auth/twitter"
+
+%div
+  %h2 Broadcasters
+  - @broadcasters.each do |user|
+    = image_tag(user.icon, :size => "48x48")
+
+- if activated?
+  - unless @requested.empty?
+    %div
+      %h2 Requested Users
+      - @requested.each do |user|
+        = image_tag(user.icon, :size => "48x48")
+
+%div
+  %h2 Tweets
+  - @tweets.each do |tweet|
+    %div
+      = tweet.message
+      by
+      = link_to "@#{tweet.user.name}", "http://twitter.com/#{tweet.user.name}"
+
+- if activated?
+  %p
+    = render :partial => "tweets/form"
